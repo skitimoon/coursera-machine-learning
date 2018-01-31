@@ -70,17 +70,34 @@ a2 = sigmoid(z2);
 a2 = [ones(m, 1) a2];
 z3 = a2 * Theta2';
 a3 = sigmoid(z3);
-
+1
+size(a3)
+pause;
 y_one_hot = zeros(size(y, 1), num_labels);
-for i=1:m
-    y_one_hot(i, y(i)) = 1;
+for i = 1:m
+    y_one_hot(i,y(i)) = 1;
+size(y);
+
+delta3 = a3 - y_one_hot;
+size(Theta2)
+size(delta3)
+size(z2)
+delta2 = delta3 * Theta2(:,2:end) .* sigmoidGradient(z2);
+size(delta2)
+size(a1)
+
+Theta2_grad = delta2' * a1;
+Theta3_grad = delta3' * a2;
+
+Theta2_grad /= m;
+Theta1_grad /= m;
 
 J = 1 / m * sum(sum(-y_one_hot .* log(a3) - (1 - y_one_hot) .* log(1 - a3)));
 
+% -------------------------------------------------------------
+
 J += lambda / (2 * m) * (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2)));
 
-
-% -------------------------------------------------------------
 
 % =========================================================================
 
