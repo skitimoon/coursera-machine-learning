@@ -90,6 +90,10 @@ J = 1 / m * sum(sum(-y_one_hot .* log(a3) - (1 - y_one_hot) .* log(1 - a3)));
 
 J += lambda / (2 * m) * (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2)));
 
+Theta2(:,1) = 0;
+Theta1(:,1) = 0;
+Theta2_grad += lambda / m * Theta2;
+Theta1_grad += lambda / m * Theta1;
 
 % =========================================================================
 
